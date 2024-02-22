@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure to store account details
+struct Account {
+    char name[100];
+    float balance;
+};
+
+// Initialize an array of accounts
+struct Account accounts[100];
+int num_accounts = 0;
+
+void create_account() {
+    printf("Enter a unique account number: ");
+    int account_number;
+    scanf("%d", &account_number);
+
+    printf("Enter account holder's name: ");
+    scanf("%s", accounts[num_accounts].name);
+
+    printf("Enter initial deposit amount: ");
+    scanf("%f", &accounts[num_accounts].balance);
+
+    num_accounts++;
+    printf("Account created successfully. Account number: %d\n", account_number);
+}
+
+void transfer_money() {
+    printf("Enter your account number: ");
+    int sender_account;
+    scanf("%d", &sender_account);
+
+    printf("Enter recipient's account number: ");
+    int recipient_account;
+    scanf("%d", &recipient_account);
+
+    printf("Enter the transfer amount: ");
+    float amount;
+    scanf("%f", &amount);
+
+    // Validate account numbers
+    if (sender_account >= num_accounts || recipient_account >= num_accounts) {
+        printf("Invalid account number(s).\n");
+        return;
+    }
+
+    // Update balances
+    accounts[sender_account].balance -= amount;
+    accounts[recipient_account].balance += amount;
+    printf("Transfer successful.\n");
+}
+
+void check_balance() {
+    printf("Enter your account number: ");
+    int account_number;
+    scanf("%d", &account_number);
+
+    if (account_number < num_accounts) {
+        float balance = accounts[account_number].balance;
+        printf("Your account balance: $%.2f\n", balance);
+    } else {
+        printf("Invalid account number.\n");
+    }
+}
+
+int main() {
+    while (1) {
+        printf("\nBank Management System\n");
+        printf("1. Create Account\n");
+        printf("2. Transfer Money\n");
+        printf("3. Check Balance\n");
+        printf("4. Exit\n");
+
+        int choice;
+        printf("Enter your choice (1/2/3/4): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                create_account();
+                break;
+            case 2:
+                transfer_money();
+                break;
+            case 3:
+                check_balance();
+                break;
+            case 4:
+                printf("Thank you for using our Bank Management System.\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please select a valid option.\n");
+        }
+    }
+
+    return 0;
+}
+
