@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Function to convert number from one base to another
+int convert_base(char* number, int from_base, int to_base) {
+    if (from_base == to_base) {
+        return atoi(number);
+    }
+
+    // Convert number to base 10 if not already
+    int decimal_number;
+    if (from_base != 10) {
+        decimal_number = strtol(number, NULL, from_base);
+    } else {
+        decimal_number = atoi(number);
+    }
+
+    // Convert decimal number to the desired base
+    if (to_base == 10) {
+        return decimal_number;
+    }
+
+    char result[100];
+    int index = 0;
+    while (decimal_number > 0) {
+        int remainder = decimal_number % to_base;
+        result[index++] = remainder + '0';
+        decimal_number /= to_base;
+    }
+    result[index] = '\0';
+
+    // Reverse the result
+    for (int i = 0, j = index - 1; i < j; i++, j--) {
+        char temp = result[i];
+        result[i] = result[j];
+        result[j] = temp;
+    }
+
+    return atoi(result);
+}
+
+int main() {
+    char number[100];
+    printf("Enter the number to convert: ");
+    scanf("%s", number);
+
+    int from_base, to_base;
+    printf("Enter the base of the number: ");
+    scanf("%d", &from_base);
+    printf("Enter the base to convert to: ");
+    scanf("%d", &to_base);
+
+    int converted_number = convert_base(number, from_base, to_base);
+    printf("%s in base %d is %d in base %d\n", number, from_base, converted_number, to_base);
+
+    return 0;
+}
