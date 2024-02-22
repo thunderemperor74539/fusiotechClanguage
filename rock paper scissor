@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+int main() {
+    printf("Welcome to Rock, Paper, Scissors!\n");
+
+    // Initialize scores
+    int player_wins = 0;
+    int computer_wins = 0;
+
+    while (1) {
+        // Take user input
+        char user_action[20];
+        printf("Enter a choice (rock, paper, scissors): ");
+        scanf("%s", user_action);
+
+        // Generate computer's choice
+        char* choices[] = {"rock", "paper", "scissors"};
+        srand(time(NULL));
+        int random_index = rand() % 3;
+        char* computer_action = choices[random_index];
+
+        printf("\nYou chose %s, computer chose %s.\n", user_action, computer_action);
+
+        // Determine the winner
+        if (strcmp(user_action, computer_action) == 0) {
+            printf("Both players selected %s. It's a tie!\n", user_action);
+        } else if (
+            (strcmp(user_action, "rock") == 0 && strcmp(computer_action, "scissors") == 0) ||
+            (strcmp(user_action, "paper") == 0 && strcmp(computer_action, "rock") == 0) ||
+            (strcmp(user_action, "scissors") == 0 && strcmp(computer_action, "paper") == 0)
+        ) {
+            printf("You win this round!\n");
+            player_wins++;
+        } else {
+            printf("Computer wins this round!\n");
+            computer_wins++;
+        }
+
+        // Display current scores
+        printf("Player 1: %d | Computer: %d\n", player_wins, computer_wins);
+
+        // Ask if the user wants to play again
+        char play_again[5];
+        printf("Do you want to play again? (yes/no): ");
+        scanf("%s", play_again);
+        if (strcmp(play_again, "no") == 0) {
+            break;
+        }
+    }
+
+    printf("Thanks for playing! Have a great day!\n");
+
+    return 0;
+}
