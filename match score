@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Structure to store match details
+struct MatchDetails {
+    char date[20];
+    char teams[2][100];
+    char league[100];
+    char link[100];
+};
+
+// Initialize match data
+struct MatchDetails match = {
+    .date = "2024-02-22",
+    .teams = {"Team A", "Team B"},
+    .league = "IPL",
+    .link = "https://example.com/match123"
+};
+
+// Initialize runs scored
+struct RunsScored {
+    char team[100];
+    int runs;
+};
+
+struct RunsScored runs[2] = {
+    {"Team A", 150},
+    {"Team B", 130}
+};
+
+void print_match_statistics() {
+    printf("Match Date: %s\n", match.date);
+    printf("Teams: %s vs. %s\n", match.teams[0], match.teams[1]);
+    printf("League: %s\n", match.league);
+    printf("Match Link: %s\n", match.link);
+}
+
+void print_runs_scored() {
+    for (int i = 0; i < 2; i++) {
+        printf("%s: %d runs\n", runs[i].team, runs[i].runs);
+    }
+}
+
+void update_score() {
+    char team[100];
+    int new_runs;
+    printf("Enter team name: ");
+    scanf("%s", team);
+    printf("Enter runs scored: ");
+    scanf("%d", &new_runs);
+
+    for (int i = 0; i < 2; i++) {
+        if (strcmp(runs[i].team, team) == 0) {
+            runs[i].runs = new_runs;
+            printf("Score updated successfully.\n");
+            return;
+        }
+    }
+
+    printf("Invalid team name.\n");
+}
+
+void show_results() {
+    char* winner = (runs[0].runs > runs[1].runs) ? runs[0].team : runs[1].team;
+    printf("%s won the match!\n", winner);
+}
+
+int main() {
+    while (1) {
+        printf("\nCricket Score Display\n");
+        printf("1. Print Match Statistics\n");
+        printf("2. Print Runs Scored\n");
+        printf("3. Update Score\n");
+        printf("4. Show Results\n");
+        printf("5. Exit\n");
+
+        int choice;
+        printf("Enter your choice (1/2/3/4/5): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                print_match_statistics();
+                break;
+            case 2:
+                print_runs_scored();
+                break;
+            case 3:
+                update_score();
+                break;
+            case 4:
+                show_results();
+                break;
+            case 5:
+                printf("Thank you for using the Cricket Score Display Application.\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please select a valid option.\n");
+        }
+    }
+
+    return 0;
+}
